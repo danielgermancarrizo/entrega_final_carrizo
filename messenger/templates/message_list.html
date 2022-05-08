@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<table width='100%'>
+  <tr>
+    <td>Fecha</td>
+    <td>Asunto</td>
+    <td>De: </td>    
+  </tr>
+  {% for message in object_list %}
+    {% if message.receiver.id == request.user.id %}      
+        <tr>
+          <td width='100px'>{{message.created}}</td>
+          <td width='200px'>{{message.title}}</td>
+          <td width='100px'>{{message.sender.username}}</td>
+          <td width='10px'><a class="nav-link" href="{% url 'message_detail' message.id %}">Leer</a></td>
+          <td width='10px'><a class="nav-link" href="{% url 'message_delete' message.id %}">Eliminar</a></td>
+        </tr>  
+      
+   {%endif%}
+   
+  {% endfor %}
+</table>
+
+<a href="{% url 'message_menu' %}"><button>Volver</button></a>
+
+
+{% endblock %}

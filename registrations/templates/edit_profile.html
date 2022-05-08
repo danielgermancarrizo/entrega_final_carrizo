@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}  
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+      {%if request.user.profile.avatar.url != None %}
+          <img src="{{request.user.profile.avatar.url}}" class="rounded-circle" width='150px' height='150px' ><br/>
+        {%else%}
+          <img src="{% static 'default.png' %}">     
+        {%endif%}
+
+      Descripcion: <br/>{{ form.description }}
+     
+      <br/>Web: {{ form.url_web }}<br/>
+      email: {{request.user.email}}<br/>
+      {% comment %} {% if request.user.is_staff %} {% endcomment %}
+      <input type="file" name="avatar" class="form-control-file mt-3" id="id_avatar"><br/>      
+      {% comment %} {%else%} 
+      <h3 style='color:red'>No posee los permisos de administración para modificar.</h3>
+      {%endif%}{% endcomment %}
+      <input type="submit" class="btn btn-primary btn-block mt-3" value="Actualizar">    
+</form>
+<a href="{% url 'menu_profile' %}">
+  <input type="submit" class="btn btn-secondary btn-block mt-3" value="Menú">
+</a>
+{% endblock %}

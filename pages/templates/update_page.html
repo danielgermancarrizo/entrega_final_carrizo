@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+<h1>Modificar Entrada</h1>
+
+  <form method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+      <p><strong>Título:</strong>{{form.title}}</p> 
+      <p>{{form.content}}</p>  
+      {% if request.user.is_staff %}
+      <p><strong>Imagen:</strong>{{form.image}}</p>  
+      {%else%}
+      <p style='color:red'>No posee permisos para modificar la imagen del post.</p>
+      {%endif%}
+    <input type="submit" class= "btn btn-primary btn-lg " value="Actualizar">
+    </form>       
+      </div>
+  </div>
+
+{% endblock %}
+

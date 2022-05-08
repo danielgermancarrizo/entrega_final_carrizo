@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="how-section1">
+  <div class="row">
+    {%if object.image.url != None %}
+    <div class="col-md-6 how-img">
+      <img src="{{object.image.url}}" class='rounded mx-auto d-block'><br/>
+    </div>
+    {%endif%}
+    <div class="col-md-6">
+      <h4 class="subheading">{{object.title}}</h4>
+      <p class="text-muted">{{object.content|safe}}</p>
+      <a href="{% url 'home' %}">Volver</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+  

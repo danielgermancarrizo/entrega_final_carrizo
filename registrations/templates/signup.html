@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}  
+
+  
+<div class="container py-5">
+	<h1>Register</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}                    
+		<button class="btn btn-primary" type="submit">Registrarse</button>
+	</form>
+	<p class="text-center">Si ya posees cuenta, por favor ingresá aquí: <a href="/login">login</a></p>
+</div>
+
+{% endblock %}
+

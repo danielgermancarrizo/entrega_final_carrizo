@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}  
+   <br/>
+   <br/>
+    <a href="{% url 'edit_profile' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Editar Perfil</button>
+    </a>
+    <br/>
+    <a href="{% url 'edit_account' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Editar Cuenta</button>
+    </a>
+    <br/>
+    <a href="{% url 'change_password' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Cambiar Password</button>
+    </a>
+{% endblock %}

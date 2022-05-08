@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}  
+<form method="POST">
+    {% csrf_token %}
+    <div>
+    Asunto: <br/>{{ form.title }}<br/>
+    Mensaje: <br/>{{ form.content }}<br/>
+    Enviar a:<br/>{{ form.receiver }}<br/>
+    </div>                
+    <button class="btn btn-primary" type="submit">Enviar</button>
+    <a href="{% url 'message_menu' %}">Volver</a>
+</form>
+{% endblock %}
+

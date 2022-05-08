@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+<br/><a href="{% url 'create_page' %}"><button class="btn btn-primary"  >Crear Entrada</button></a>
+</div>  
+
+<table>
+  <tr>
+    <h2>Lista de entradas creadas por {{request.user.username}}</h2>
+  </tr>
+  <tr>
+    <td><strong>Título</strong></td>
+    <td><strong>Creación</strong></td>
+    <td><strong>Autor</strong></td>
+  </tr>
+{% for page in object_list%}
+{% if user.is_superuser %}
+
+    <tr>
+      <td >{{page.title}}</td>
+      <td style="padding: 0.1em">{{page.creation_date}}</td>
+      <td style="padding: 0.1em">{{page.author.username}}</td>
+      <td style="padding: 0.1em"><a class="nav-link" href="{% url 'delete_page' page.id %}">Eliminar</a></td>
+      <td style="padding: 0.1em"><a class="nav-link" href="{% url 'update_page' page.id  %}">Modificar</a></td>
+  </tr>  
+  {%else%}
+    {% if page.author.id == request.user.id %} 
+          <tr>
+            <td style="padding: 0.5em">{{page.title}}</td>
+            <td style="padding: 0.1em">{{page.creation_date}}</td>
+        
+            <td style="padding: 0.1em"><a class="nav-link" href="{% url 'delete_page' page.id %}">Eliminar</a></td>
+            <td style="padding: 0.1em"><a class="nav-link" href="{% url 'update_page' page.id  %}">Modificar</a></td>
+
+          </tr>  
+        
+    {%endif%}
+  {%endif%}
+  {% empty %}
+  <h1>Aun no hay entradas en el blog, si desea crear una haga click <a class="nav-link" href="{% url 'create_page' %}">AQUÍ</a></h1>
+  {% endfor %}
+</table>
+{% endblock %}

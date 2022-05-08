@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<h1 style='color:red'>Últimas entradas al Blog</h1>
+  {% for page in object_list%}
+  
+  <div class="card mb-3" style="max-width: 100%;">
+    
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        {%if page.image.url != None %}
+        <img src="{{page.image.url}}" style='width:100%'>
+      {%endif%}
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{page.title}}</h5>
+          <p class="card-text">{{page.content|truncatewords:40|safe}}</p>
+          <a href="{% url 'detail_page' page.id %}">Leer mas...</a>
+          <p class="card-text"><small class="text-muted">Autor: {{page.author}} | Creación: {{page.creation_date}} </small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <h1>Disculpe, momentáneamente no hay entradas para mostrar</h1>
+  {% endfor %}
+  
+{% endblock %} 

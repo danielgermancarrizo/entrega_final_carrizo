@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+   
+<form method="post">{% csrf_token %}
+     
+ 
+ 
+    <h1>Estás segurx de eliminar el mensaje de "{{ object.sender.username }}"?</h1>
+     
+     
+     
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock %}

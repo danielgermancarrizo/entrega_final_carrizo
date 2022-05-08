@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Hola {{request.user.username}}, ¿Qué vas a hacer? </h1>
+    <div>
+        <h3><a href="{% url 'message_create' %}">Redactar un mensaje</a></h3>
+        <h3><a href="{% url 'message_list' %}">Ver mensajes recibidos</a></h3>
+    </div>  
+{% endblock %}

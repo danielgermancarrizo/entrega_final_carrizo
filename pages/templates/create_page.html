@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static '/ckeditor/ckeditor.js' %}"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+{% block content %} 
+<div class="form-row">
+  <form method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.media}}
+    <br/>
+    <p style="width:100%">Título: {{form.title}}</p>
+
+      {% comment %} <p><strong>Título:</strong>{{form.title}}</p>  {% endcomment %}
+      <p><strong>Texto:</strong>{{form.content}}</p>  
+      <p><strong>Imagen:</strong>{{form.image}}</p>        
+    <input type="submit" class= "btn btn-primary btn-lg" style="width:100%" value="crear">
+    </form>       
+</div>
+{% endblock %}
+

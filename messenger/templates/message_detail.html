@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h3>Asunto: {{object.title}}</h3>
+  <h4>Mensaje: {{object.content}}</h4>
+  <p>Enviado por: {{object.sender.username}}</p>
+  
+  <a href="{% url 'message_list' %}">Volver</a>
+
+{% endblock %}
+  
