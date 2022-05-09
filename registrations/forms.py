@@ -1,8 +1,9 @@
 from pyexpat import model
 from django import forms
+from redis import AuthenticationError
 from .models import Profile
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm, AuthenticationForm
 
 
 class ProfileForm(forms.ModelForm):
@@ -31,11 +32,16 @@ class NewUserForm(UserCreationForm):
 
 
 class UserRegisterForm(UserCreationForm):
-     email = forms.EmailField()
-     description = forms.CharField(max_length=200)
+     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
+     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
+     password1 = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class':'form-control', 'type': 'password'}))
+     password2 = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class':'form-control', 'type': 'password'}))
+         
+     
      class Meta:
          model = User
-         fields = ['username', 'email', 'password1', 'password2', 'description']
+            
+         fields = ['username', 'email', 'password1','password2']
 
 # # Create a UserUpdateForm to update username and email
 # class UserUpdateForm(forms.ModelForm):
@@ -75,3 +81,12 @@ class ChangeUserPasswordForm(PasswordChangeForm):
     class Meta:
         model = User
         fields = ('old_password', 'new_password1','new_password2')
+        
+class FormularioLogin(AuthenticationForm):
+    def __init__(self,*args, **kwargs):
+        super(FormularioLogin,self).__init__(*args,**kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Nombre de usuario'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Contraseña'
+        

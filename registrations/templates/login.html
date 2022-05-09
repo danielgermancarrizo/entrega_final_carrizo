@@ -4,25 +4,17 @@
 {% block content %}  
 
 
-
-
-<form method="post" action="{% url 'login' %}">
-
+<form method="post">
     {% csrf_token %}
+    {%if form.error_messages%}
+        <strong>ERROR: </strong>{{form.get_invalid_login_error}}
+    {%endif%}
 
-<div>
-  <td>{{ form.username }}</td>
-</div>
-<div>
-  <td>{{ form.password }}</td>
-</div>
+        {{form.as_p}}
 
-<div>
   <input type="submit" value="login" />
   
 </div>
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
 
 {% endblock %}

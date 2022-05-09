@@ -1,54 +1,79 @@
+from audioop import reverse
 from re import template
 from tkinter.tix import Form
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import path
 from django.views.generic import TemplateView, View
 from django.shortcuts import render, redirect
+from requests import request
 from .forms import ChangeUserPasswordForm, NewUserForm, UserCreationForm, UserRegisterForm
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, 
                                        UserChangeForm, PasswordChangeForm)
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.views.generic.edit import UpdateView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django import forms
-from .forms import NewUserForm,ProfileUpdateForm,ProfileForm, EditUserForm, ChangeUserPasswordForm
+from .forms import NewUserForm,ProfileUpdateForm,ProfileForm, EditUserForm, ChangeUserPasswordForm, FormularioLogin
 from .models import Profile
 from django.contrib import messages
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, login
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import never_cache
 
 
-class AccountLoginView(TemplateView):
-    template_name = 'login.html'
+
+# class AccountLoginView(TemplateView):
+#     template_name = 'login.html'
     
-    def get(self,request):
-        context = {
-            'form': AuthenticationForm()
-        }
-        return render(request,self.template_name, context)
+#     def get(self,request):
+#         context = {
+#             'form': AuthenticationForm()
+#         }
+#         return render(request,self.template_name, context)
     
-    def post(self,request):
-        form = AuthenticationForm(request,data=request.POST)
+#     def post(self,request):
+#         form = AuthenticationForm(request,data=request.POST)
         
-        if form:
-            user = request.POST.get('username')
-            password = request.POST.get('password')
-            user_auth = authenticate(username = user, password=password)
+#         if form:
+#             user = request.POST.get('username')
+#             password = request.POST.get('password')
+#             user_auth = authenticate(username = user, password=password)
             
-            if user_auth:
-                login(request,user_auth)
-                return render(request,self.template_name,context={'message': f'Bienvenidx {user}'})
-            else:
-                return render(request,self.template_name,context={'message': 'Error, verifique usuario y contraseña.'})
+#             if user_auth:
+#                 login(request,user_auth)
+#                 return render(request,self.template_name,context={'message': f'Bienvenidx {user}'})
+#             else:
+#                 return render(request,self.template_name,context={'message': 'Error, verifique usuario y contraseña.'})
+#         else:
+#             return render(request,self.template_name,context={'message': 'Formulario con error'})     
+
+class AccountLoginView(FormView):
+    template_name = 'login.html'
+    form_class = FormularioLogin
+    success_url = reverse_lazy('home')
+    
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args , **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
         else:
-            return render(request,self.template_name,context={'message': 'Formulario con error'})     
+            return super(AccountLoginView, self).dispatch(request,*args, **kwargs)
+    
+    def form_valid(self,form):
+        login(self.request, form.get_user())
+        return super(AccountLoginView, self).form_valid(form)
+    
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
@@ -166,13 +191,15 @@ def change_password(request):
 class EditUserView(UpdateView):
     form_class = EditUserForm
     template_name = 'edit.html'
+    
     success_url = reverse_lazy('menu_profile')
     
     def get_object(self):
-        return self.request.user    
+        return self.request.user 
+       
 
 class UserRegisterView(CreateView):
-    form_class= UserCreationForm
+    form_class= UserRegisterForm
     template_name = 'signup.html'
     success_url = reverse_lazy('login')
 

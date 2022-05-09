@@ -3,12 +3,15 @@
 {% load static %}
 {% block content %}  
 
-  
 <div class="container py-5">
 	<h1>Register</h1>
 	<form method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}                    
+		Usuario: {{form.username}}
+		Email: {{form.email}}
+		Nuevo Password: {{form.password1}}
+		Repetir Password: {{form.password2}}
+		                 
 		<button class="btn btn-primary" type="submit">Registrarse</button>
 	</form>
 	<p class="text-center">Si ya posees cuenta, por favor ingresá aquí: <a href="/login">login</a></p>

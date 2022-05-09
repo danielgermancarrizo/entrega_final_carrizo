@@ -9,7 +9,7 @@
         {{form.as_p}}
         
         
-        <input type="submit" value="Actualizar"> 
+        <input type="submit" class="btn btn-primary btn-block mt-3" value="Actualizar"> 
     </form>
 
     {% if messages %}
@@ -19,5 +19,8 @@
             {% endfor %}
         </ul>
     {% endif %}
+    <a href="{% url 'menu_profile' %}">
+        <input type="submit" class="btn btn-secondary btn-block mt-3" value="Menú">
+      </a>
 
 {%endblock%}

@@ -29,8 +29,7 @@ urlpatterns = [
     path('registration/', include('registrations.urls')),
     path("login/", AccountLoginView.as_view(), name="login"),
     path('home/', PageListView.as_view(), name='home'),
-    #path('home/', include('web.urls')),
+    path('', PageListView.as_view(), name='home'),    
     path('about/', TemplateView.as_view(template_name="about.html"), name='about'),
-    #path("", PageListView.as_view(), name=''),
     path('messenger/', include('messenger.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
