@@ -14,6 +14,6 @@ el sistema informa dicha situación.
 ## LINK A VIDEO: https://drive.google.com/file/d/13D5npJc_TDP7PtopNMPOOq2XliytWOm1/view?usp=sharing
 ## LINK A PLANILLA DE CASOS DE PRUEBAS UNITARIAS: https://docs.google.com/spreadsheets/d/1Ur_oxHEhgFZ1q0u_iasAKZIdRdIRoi_j2dBT8zp6_j4/edit?usp=sharing
 
-#user: admin pass: coderhouse28850
+## user: admin pass: coderhouse28850
 
 ## AUTOR: DANIEL CARRIZO
